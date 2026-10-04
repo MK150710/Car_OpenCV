@@ -1,40 +1,30 @@
-LANDMARK_NAMES = [
-    "Wrist",
-    "Thumb CMC",
-    "Thumb MCP",
-    "Thumb IP",
-    "Thumb Tip",
-    "Index MCP",
-    "Index PIP",
-    "Index DIP",
-    "Index Tip",
-    "Middle MCP",
-    "Middle PIP",
-    "Middle DIP",
-    "Middle Tip",
-    "Ring MCP",
-    "Ring PIP",
-    "Ring DIP",
-    "Ring Tip",
-    "Pinky MCP",
-    "Pinky PIP",
-    "Pinky DIP",
-    "Pinky Tip"
-]
+import math
 
+def dist(a, b):
+    return round(math.dist((a.x, a.y), (b.x, b.y)), 2)
 
-def print_hands(result):
+# used Limit from data
+def isCurled(hand, mcp, pip, tip):
+    mcpTip = dist(hand[mcp], hand[tip])
+    mcpPip = dist(hand[mcp], hand[pip])
 
-    for hand_num, hand in enumerate(result, 1):
+    return True if mcpTip < (0.8*mcpPip) else False
 
-        print(f"\n========== HAND {hand_num} ==========")
+# Js check if the hand is a fist
+def fisted(hand):
+    fingers = {
+        "index": [5, 6, 8],
+        "middle": [9, 10, 12],
+        "ring": [13, 14, 16],
+        "little": [17, 18, 20]
+    }
 
-        for i, landmark in enumerate(hand):
-            print(
-                f"{i:2} | "
-                f"{LANDMARK_NAMES[i]:12} | "
-                f"x: {landmark.x:.4f} | "
-                f"y: {landmark.y:.4f}"
-            )
+    is_curled = 0
 
-        print("================================")
+    for finger, count in fingers.items():
+        if isCurled(hand, count[0], count[1], count[2]):
+            is_curled += 1  
+    
+    
+
+    return True if is_curled >=3 else False
