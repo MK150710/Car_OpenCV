@@ -1,5 +1,5 @@
 from hands import see_hands
-from process import fisted, calcMean, turn
+from process import fisted, calcMean, turn, shoot
 
 def main():
 
@@ -14,6 +14,7 @@ def main():
                 x1, y1 = calcMean(hands[0])
                 x2, y2 = calcMean(hands[1])
                 print(turn(y1Mean, y2Mean, y1, y2))
+                shoot(hands)
 
             elif fisted(hands[0]) and fisted(hands[-1]):
                 stabilityCount += 1
