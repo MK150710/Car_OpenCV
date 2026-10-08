@@ -50,11 +50,15 @@ def turn(y1Mean,y2Mean, y1, y2):
     dely1 = y1-y1Mean
     dely2 = y2-y2Mean
 
-    if dely1 >=0.05 and dely2 <= -0.05:
+    if dely1 >=0.02 and dely2 <= -0.02:
         return "RIGHT"
 
-    if dely2 >=0.05 and dely1 <= -0.05:
+    elif dely2 >=0.03 and dely1 <= -0.03:
+            
             return "LEFT"
+
+    else:
+        return None
 
 
 def shoot(hands):
@@ -64,7 +68,13 @@ def shoot(hands):
     dy2 = abs(hands[1][4].y - hands[1][6].y)
 
 
-    if dx1 <= 0.055 and dy1 <= 0.055 and dx2 <= 0.065 and dy2 <= 0.065 :
-        print("click")
+    if dx1 <= 0.065 and dy1 <= 0.065 and dx2 <= 0.065 and dy2 <= 0.065:
+        return "SHOOT"
+
+    elif dx2 <= 0.065 and dy2 <= 0.065:
+        return "STOP"
+
     else:
-        print("")
+        return None
+
+

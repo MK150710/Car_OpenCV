@@ -1,8 +1,9 @@
 from hands import see_hands
 from process import fisted, calcMean, turn, shoot
+import keyboard 
+import time
 
 def main():
-
     print("MAIN STARTED")
     stabilityCount = 0
     baselineSet = False # Bool added here so that if the cam loses control for a sec it doesnt once again assign new mean baseline values 
@@ -13,9 +14,31 @@ def main():
                 
                 x1, y1 = calcMean(hands[0])
                 x2, y2 = calcMean(hands[1])
-                print(turn(y1Mean, y2Mean, y1, y2))
-                shoot(hands)
+                whereGo = turn(y1Mean, y2Mean, y1, y2)
+                doShoot = shoot(hands)
 
+                if doShoot:
+                    if doShoot == "SHOOT":
+                        keyboard.send("space")
+                    else:
+                        keyboard.release("w")
+                        keyboard.press("s")
+                elif whereGo:
+                    if whereGo == "RIGHT":
+                        keyboard.press("w")
+                        keyboard.press("d")
+                        time.sleep(0.01)
+                        keyboard.release("a")
+                        keyboard.release("s")
+                    else:
+                        keyboard.press("w")
+                        keyboard.press("a")
+                        keyboard.release("s")
+                else:
+                    keyboard.press("w")
+                    keyboard.release("a")
+                    keyboard.release("d")
+                    keyboard.release("s")
             elif fisted(hands[0]) and fisted(hands[-1]):
                 stabilityCount += 1
                 print("BOTH HANDS ARE FISTS")
@@ -32,8 +55,10 @@ def main():
                     x1Mean, y1Mean = calcMean(hands[0])
                     x2Mean, y2Mean = calcMean(hands[1])
                     baselineSet = True
+                    keyboard.press("w")
         else:
             print("Need two hands")        
 
 if __name__ == "__main__":
     main()
+
