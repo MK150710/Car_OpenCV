@@ -17,9 +17,9 @@ def see_hands():
         ),
         running_mode=RunningMode.VIDEO,
         num_hands=2,
-        min_hand_detection_confidence=0.7,
+        min_hand_detection_confidence=0.5,
         min_hand_presence_confidence=0.01,
-        min_tracking_confidence=0.001,
+        min_tracking_confidence=0.00001,
     )
 
     with HandLandmarker.create_from_options(options) as landmarker:
