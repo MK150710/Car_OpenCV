@@ -22,20 +22,24 @@ def main():
                         keyboard.send("space")
                     else:
                         keyboard.release("w")
+                        print("W out")
                         keyboard.press("s")
-                elif whereGo:
-                    if whereGo == "RIGHT":
-                        keyboard.press("w")
-                        keyboard.press("d")
-                        time.sleep(0.01)
-                        keyboard.release("a")
-                        keyboard.release("s")
-                    else:
-                        keyboard.press("w")
-                        keyboard.press("a")
-                        keyboard.release("s")
+                        print("S in")
                 else:
                     keyboard.press("w")
+                if whereGo:
+                    if whereGo == "RIGHT":
+                        keyboard.press("d")
+                        keyboard.release("a")
+                        time.sleep(0.2)
+                        keyboard.release("d")
+                    else:
+                        keyboard.press("a")
+                        keyboard.release("d")
+                        time.sleep(0.2)
+                        keyboard.release("a")
+
+                else:
                     keyboard.release("a")
                     keyboard.release("d")
                     keyboard.release("s")

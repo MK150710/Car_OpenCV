@@ -50,11 +50,12 @@ def turn(y1Mean,y2Mean, y1, y2):
     dely1 = y1-y1Mean
     dely2 = y2-y2Mean
 
-    if dely1 >=0.02 and dely2 <= -0.02:
+    if dely1 >=0.035 and dely2 <= -0.035:
+        print(dely1, dely2)
         return "RIGHT"
 
-    elif dely2 >=0.03 and dely1 <= -0.03:
-            
+    elif dely2 >=0.035 and dely1 <= -0.035:
+            print(dely1, dely2)
             return "LEFT"
 
     else:
