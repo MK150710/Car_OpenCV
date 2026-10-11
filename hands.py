@@ -18,13 +18,13 @@ def see_hands():
         ),
         running_mode=RunningMode.VIDEO,
         num_hands=2,
-        min_hand_detection_confidence=0.35,
-        min_hand_presence_confidence=0.01,
-        min_tracking_confidence=0.00001,
+        min_hand_detection_confidence=0.5,
+        min_hand_presence_confidence=0.7,
+        min_tracking_confidence=0.5,
     )
 
     with HandLandmarker.create_from_options(options) as landmarker:
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         cv2.namedWindow("Camera", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("Camera", 320, 240)
         cv2.setWindowProperty(
