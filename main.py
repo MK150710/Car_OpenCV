@@ -1,64 +1,72 @@
-from hands import see_hands
-from process import fisted, calcMean, turn, shoot
-import keyboard 
 import time
+import keyboard
+from hands import see_hands
+from process import fisted, calcMean, turn, change
+
+lastPressedRestart = 0
+lastPressedRepeat = 0
+cooldown = 2
+
+def checkTurn(command):
+    global lastPressedRepeat, lastPressedRestart, cooldown
+    if command == "BACK":
+        # keyboard.release("w")
+        # keyboard.press("s")
+        print("STOOOOOP")
+    elif command == "RESTART":
+        now = time.monotonic()
+        if now - lastPressedRestart > cooldown:
+            lastPressedRestart = now
+            print("RESTARTTTT")
+            # keyboard.send("t")
+    elif command == "REPEAT":
+        nowRepeat = time.monotonic()
+        if nowRepeat - lastPressedRepeat > cooldown:
+            lastPressedRepeat = nowRepeat
+            print("REPEASRTTTT")
+            # keyboard.send("r")
+    else:
+        # keyboard.release("s")
+        # keyboard.press("w")
+        print("forWARDDDDD")
+
 
 def main():
-    print("MAIN STARTED")
+    print("MAIN STARTED - FIXED LOOP")
     stabilityCount = 0
-    baselineSet = False # Bool added here so that if the cam loses control for a sec it doesnt once again assign new mean baseline values 
+    baselineSet = False
+    
+    y1Mean, y2Mean = 0, 0
+    current_key = None  # Tracks what's currently held down to prevent spamming
 
     for hands in see_hands():
         if len(hands) >= 2:
-            if stabilityCount > 30:
-                
-                x1, y1 = calcMean(hands[0])
-                x2, y2 = calcMean(hands[1])
+            if baselineSet:
+                ___, y1 = calcMean(hands[0])
+                __, y2 = calcMean(hands[1])
                 whereGo = turn(y1Mean, y2Mean, y1, y2)
-                doShoot = shoot(hands)
+                doShoot = change(hands)
 
                 if doShoot:
-                    if doShoot == "SHOOT":
-                        keyboard.send("space")
-                    else:
-                        keyboard.release("w")
-                        keyboard.press("s")
-                elif whereGo:
-                    if whereGo == "RIGHT":
-                        keyboard.press("w")
-                        keyboard.press("d")
-                        time.sleep(0.01)
-                        keyboard.release("a")
-                        keyboard.release("s")
-                    else:
-                        keyboard.press("w")
-                        keyboard.press("a")
-                        keyboard.release("s")
+                    checkTurn(doShoot)
+                elif whereGo == "RIGHT":
+                    pass
+                elif whereGo == "LEFT":
+                    pass
                 else:
-                    keyboard.press("w")
-                    keyboard.release("a")
-                    keyboard.release("d")
-                    keyboard.release("s")
+                    pass
+
             elif fisted(hands[0]) and fisted(hands[-1]):
                 stabilityCount += 1
-                print("BOTH HANDS ARE FISTS")
-                print(
-                    "LEFT/RIGHT:",
-                    fisted(hands[0]),
-                    fisted(hands[-1])
-                )
-                if stabilityCount == 30 and not baselineSet:
-                    print("FULLY STABLE")
-                    print("------------------------")
-                    print("------------------------")
-                    print("------------------------")
+                print(f"Holding fists... {stabilityCount}/30")
+                if stabilityCount >= 30 and not baselineSet:
                     x1Mean, y1Mean = calcMean(hands[0])
                     x2Mean, y2Mean = calcMean(hands[1])
                     baselineSet = True
                     keyboard.press("w")
+                    print("BASELINE LOCKED. RUNNING.")
         else:
-            print("Need two hands")        
+            print("Looking for two hands...")
 
 if __name__ == "__main__":
     main()
-

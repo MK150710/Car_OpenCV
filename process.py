@@ -61,7 +61,7 @@ def turn(y1Mean,y2Mean, y1, y2):
         return None
 
 
-def shoot(hands):
+def change(hands):
     dx1 = abs(hands[0][4].x - hands[0][6].x)
     dy1 = abs(hands[0][4].y - hands[0][6].y)
     dx2 = abs(hands[1][4].x - hands[1][6].x)
@@ -69,12 +69,13 @@ def shoot(hands):
 
 
     if dx1 <= 0.065 and dy1 <= 0.065 and dx2 <= 0.065 and dy2 <= 0.065:
-        return "SHOOT"
+        return "BACK"
 
-    elif dx2 <= 0.065 and dy2 <= 0.065:
-        return "STOP"
+    elif dx2 <= 0.065 and dy2 <= 0.065 and dx1 >= 0.07 and dy1 >= 0.07:
+        return "RESTART"
+
+    elif dx1 <= 0.065 and dy1 <= 0.065 and dx2 >= 0.07 and dy2 >= 0.07:
+            return "REPEAT"
 
     else:
-        return None
-
-
+        return 'AHEAD'
