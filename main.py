@@ -10,24 +10,24 @@ cooldown = 2
 def checkTurn(command):
     global lastPressedRepeat, lastPressedRestart, cooldown
     if command == "BACK":
-        # keyboard.release("w")
-        # keyboard.press("s")
+        keyboard.release("w")
+        keyboard.press("s")
         print("STOOOOOP")
     elif command == "RESTART":
         now = time.monotonic()
         if now - lastPressedRestart > cooldown:
             lastPressedRestart = now
             print("RESTARTTTT")
-            # keyboard.send("t")
+            keyboard.send("t")
     elif command == "REPEAT":
         nowRepeat = time.monotonic()
         if nowRepeat - lastPressedRepeat > cooldown:
             lastPressedRepeat = nowRepeat
             print("REPEASRTTTT")
-            # keyboard.send("r")
+            keyboard.send("r")
     else:
-        # keyboard.release("s")
-        # keyboard.press("w")
+        keyboard.release("s")
+        keyboard.press("w")
         print("forWARDDDDD")
 
 
@@ -49,12 +49,18 @@ def main():
 
                 if doShoot:
                     checkTurn(doShoot)
-                elif whereGo == "RIGHT":
-                    pass
-                elif whereGo == "LEFT":
-                    pass
-                else:
-                    pass
+                if whereGo:
+                    if whereGo[0] == "RIGHT":
+                        keyboard.press("d")
+                        time.sleep(whereGo[1]*10)
+                        keyboard.release("d")
+                    elif whereGo[0] == "LEFT":
+                        keyboard.press("d")
+                        time.sleep(whereGo[1]*10)
+                        keyboard.release("d")
+                    else:
+                        keyboard.release("d")
+                        keyboard.release("a")   
 
             elif fisted(hands[0]) and fisted(hands[-1]):
                 stabilityCount += 1
