@@ -36,3 +36,5 @@ Thats all !
 ![alt text](image.png)
 
 P.S: Dont judge my face guys i looks ust as goofy all the time
+
+Oh and, No AI was used in the making of this project :)
