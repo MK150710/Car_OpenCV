@@ -4,6 +4,17 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 import time
 import keyboard
+import os
+import sys
+
+# AI was used in the following funciton(im trying to get it to package with pyinstaller)
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 
 def see_hands():
     
@@ -12,9 +23,11 @@ def see_hands():
     HandLandmarkerOptions = mp.tasks.vision.HandLandmarkerOptions
     RunningMode = mp.tasks.vision.RunningMode
 
+    modelPath = resource_path("hand_landmarker.task")
+
     options = HandLandmarkerOptions(
         base_options=BaseOptions(
-            model_asset_path="hand_landmarker.task"
+            model_asset_path=modelPath
         ),
         running_mode=RunningMode.VIDEO,
         num_hands=2,
