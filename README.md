@@ -8,6 +8,12 @@ Tech Stack:
 - OpenCV
 - My big brain :)
 
+## Things to have beforehand
+
+- A WORKING WEBCAM (Obviously)
+- A lot of patience, cause youre gonna suck initially(I did)
+- A well but not too well lit room for good hand detection
+
 ## How to play
 
 - Start the app
@@ -28,6 +34,15 @@ Tech Stack:
 - Clone [This repo](https://github.com/MK150710/car_opencv)
 - Create a Venv with `python -m venv env` and activate it with `env/Scripts/Activate.ps1`
 - `pip install -r requirements.txt` to install all dependencies
+
+## Troubleshooting
+
+- Incase it doesnt work well foe you, id recommend trying to edit some of the values yourself..
+- Main areas to edit:
+    - Process.py tracking values
+    - Main.py delay times
+
+Ive tried to make it as good pas possible, but thats for my device, each camera is different... So all the best!
 
 Thats all !
 
